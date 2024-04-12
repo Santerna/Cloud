@@ -11,6 +11,7 @@
   "dependencies": {
     "@aws-sdk/client-s3": "^3.554.0",
     "aws-sdk": "^2.1598.0",
+    "dotenv": "^16.4.5",
     "yargs": "^17.7.2"
   },
   "type": "module"

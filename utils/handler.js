@@ -5,8 +5,8 @@ import { dirname, resolve } from 'path'
 
 const s3 = new S3Client({
     credentials:{ 
-        accessKeyId: '',
-        secretAccessKey: ''
+        accessKeyId: AWS_ACCESS_KEY_ID,
+        secretAccessKey: AWS_SECRET_ACCESS_KEY
     },
     region: 'eu-west-1',
 });
