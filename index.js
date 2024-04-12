@@ -1,26 +1,56 @@
 import yargs from "yargs";
 import { hideBin } from "yargs/helpers";
-;
-export { listFiles, uploadFile } from "./utils/handler";
+import { listFiles } from "./utils/handler.js";
+export { listFiles, uploadFile, filteredFileList, deleteFile } from "./utils/handler.js";
 
 yargs(hideBin(process.argv))
-    .command("list", "List all files in an S3 Bucket", listFiles)
+    .command({
+        command: "list",
+        describe: "List all files in an S3 Bucket", 
+        handler() {
+          listFiles()  
+        }
+    })
     .command({
         command: "upload",
         describe: "Upload a local file to a defined location in the bucket", 
         builder: { 
             fileName: { 
-                describe: 'Name of Uploaded File', 
-                demandOption: true,  // Required 
-                type: 'string'     
+                describe: "Name of Uploaded File", 
+                demandOption: true,
+                type: "string"    
             }
         },
         handler(argv) {
           uploadFile(argv)  
         }
     })
-    .command("filtered", "List an AWS buckets files that match a filter regex", () => {
-        console.log("filetr")
+    .command({
+        command: "filter", 
+        describe: "Return list of files matching a regex from a bucket", 
+        builder: { 
+            pattern: { 
+                describe: "Pattern for Filter Files", 
+                demandOption: true,
+                type: "string"    
+            }
+        },
+        handler(argv) {
+            filteredFileList(argv)
+        }
     })
-    .command("delete", "Delete all files matching a regex from a bucket", deleteFile)
+    .command({
+        command: "delete", 
+        describe: "Delete all files matching a regex from a bucket", 
+        builder: { 
+            pattern: { 
+                describe: "Pattern for Delete Files", 
+                demandOption: true,
+                type: "string"   
+            }
+        },
+        handler(argv) {
+            deleteFile(argv)
+        }
+    })
     .parse();
